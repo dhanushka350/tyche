@@ -23,3 +23,5 @@
 /nbdist/
 /.nb-gradle/
 /build/
+
+/src/main/angularNew/node_modules/
