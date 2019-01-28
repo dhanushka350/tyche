@@ -1,6 +1,7 @@
 package com.akvasoft.tychewebapp.modal;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "T_RATE_DETAILS")
@@ -22,7 +23,7 @@ public class RateDetails {
     @Column(name = "INNER_LINK")
     private String innerLink;
     @Column(name = "SCR_DATE")
-    private String date;
+    private Date date;
 
     public int getId() {
         return id;
@@ -80,11 +81,11 @@ public class RateDetails {
         this.innerLink = innerLink;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 }
