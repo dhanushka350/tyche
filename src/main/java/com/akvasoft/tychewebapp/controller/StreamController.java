@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "scrape/stream")
+@RequestMapping(value = "/scrape")
 public class StreamController {
 
 
@@ -23,6 +23,11 @@ public class StreamController {
     @RequestMapping(value = "/getChartData/{currency}/{days}", method = RequestMethod.GET)
     public List<RateDetails> getChartData(@PathVariable String currency, @PathVariable int days) {
         return streamService.getChart(currency, days);
+    }
+
+    @RequestMapping(value = "/exportCSV/{start}/{end}", method = RequestMethod.GET)
+    public String exportCSV(@PathVariable String start, @PathVariable String end) {
+        return streamService.exportCSVFile(start,end);
     }
 
 }
