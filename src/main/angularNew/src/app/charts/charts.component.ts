@@ -29,7 +29,7 @@ export class ChartsComponent implements OnInit {
     this.subscription = this.stream.getCurrency().subscribe(currency => {
       this.currency = currency;
       console.log("getting data for -" + this.currency);
-
+      this.getChartData(5, this.currency);
     });
   }
 
