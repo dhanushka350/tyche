@@ -1,6 +1,24 @@
 <div class="ui center aligned placeholder ui grey segment" style="background-color: black;">
-  <div class="inline">
-    <p style="color: white"><u>Present the webscrape data as it is being refresh – just like the desktop app – maybe the last 5 days</u>.</p>
-    <p style="color: white"><u>Have it so that the time stamp column is frozen so that it shows when scrolling to the right</u></p>
-  </div>
+  <table class="ui inverted table">
+    <thead>
+    <tr>
+      <th>Symbol</th>
+      <th>Bid</th>
+      <th>Ask</th>
+      <th>Short Value</th>
+      <th>Change Open Interest</th>
+      <th>Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let row of rows">
+      <td>{{row.symbol}}</td>
+      <td>{{row.bid}}</td>
+      <td>{{row.ask}}</td>
+      <td>{{row.shortValue}}</td>
+      <td>{{row.changeOpenInterest}}</td>
+      <td>{{row.date}}</td>
+    </tr>
+    </tbody>
+  </table>
 </div>
