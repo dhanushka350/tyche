@@ -8,13 +8,13 @@
       <div class="inline fields">
         <label style="color: white; width: 10%; text-align: right">Date Range :</label>
         <div class=" six wide field">
-          <input type="text" placeholder="Form">
+          <input type="date" placeholder="Form" id="from">
         </div>
         <div class=" six wide field">
-          <input type="text" placeholder="To">
+          <input type="date" placeholder="To" id="to">
         </div>
         <div class="field">
-          <button class="ui button" style="color: black">Sumbit</button>
+          <button class="ui button" style="color: black" (click)="exportCSV();">Sumbit</button>
         </div>
       </div>
     </div>

@@ -8,7 +8,7 @@ import {DataStreamComponent} from "./data-stream/data-stream.component";
 
 const routes: Routes = [
   {
-    path: 'login',
+    path: '',
     component: LoginComponent
   },
   {

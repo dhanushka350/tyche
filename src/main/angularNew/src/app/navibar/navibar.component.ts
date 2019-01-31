@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {StreamService} from "../service/stream.service";
 
 @Component({
   selector: 'app-navibar',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavibarComponent implements OnInit {
 
-  constructor() { }
+  constructor(private stream: StreamService) {
+  }
 
   ngOnInit() {
   }
 
+  setCurrency(value: any) {
+    this.stream.setCurrency(value);
+  }
 }

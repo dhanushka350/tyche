@@ -20,7 +20,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class MainService implements InitializingBean {
+public class MainService {
 
     @Autowired
     private RateDetailsRepo repo;
@@ -32,7 +32,7 @@ public class MainService implements InitializingBean {
     public void start() {
         System.setProperty("webdriver.gecko.driver", "/var/lib/tomcat8/geckodriver");
         FirefoxOptions options = new FirefoxOptions();
-        options.setHeadless(false);
+        options.setHeadless(true);
         innerDriver = new FirefoxDriver(options);
         try {
             scrapeRates(new FirefoxDriver(options));
@@ -89,13 +89,37 @@ public class MainService implements InitializingBean {
                     saveRate(getInnerData(r, tr.findElements(By.xpath("./*")).get(0).findElement(By.tagName("span")).findElement(By.tagName("a")).getAttribute("href")));
                 } else if (r.getSymbol().equalsIgnoreCase("Bitcoin")) {
                     saveRate(getInnerData(r, tr.findElements(By.xpath("./*")).get(0).findElement(By.tagName("span")).findElement(By.tagName("a")).getAttribute("href")));
+                } else if (r.getSymbol().equalsIgnoreCase("Oil - US Crude")) {
+                    saveRate(getInnerData(r, tr.findElements(By.xpath("./*")).get(0).findElement(By.tagName("span")).findElement(By.tagName("a")).getAttribute("href")));
                 }
 
             }
         }
 
-        WebElement Indices = driver.findElementByXPath("/html/body/div[1]/div[2]/div[2]/div[1]/div[3]/div[2]/table[2]/tbody");
+
+        WebElement Indices = driver.findElementByXPath("/html/body/div[1]/div[2]/div[2]/div[1]/div[3]/div[2]/table[1]/tbody");
         List<WebElement> trs2 = Indices.findElements(By.xpath("./*"));
+        for (WebElement tr : trs2) {
+            System.out.println(tr.findElements(By.xpath("./*")).get(0).getAttribute("innerText"));
+            // US 500 for SP 500
+            // Wall Street for US 30 Wall Street
+            if (tr.findElements(By.xpath("./*")).get(0).getAttribute("innerText").equalsIgnoreCase("Oil - US Crude")) {
+
+                r = new RateDetails();
+                r.setSymbol(tr.findElements(By.xpath("./*")).get(0).getAttribute("innerText"));
+                r.setBid(tr.findElements(By.xpath("./*")).get(1).findElement(By.tagName("span")).getAttribute("data-value"));
+                r.setAsk(tr.findElements(By.xpath("./*")).get(2).findElement(By.tagName("span")).getAttribute("data-value"));
+
+                if (r.getSymbol().equalsIgnoreCase("Oil - US Crude")) {
+                    saveRate(getInnerData(r, tr.findElements(By.xpath("./*")).get(0).findElement(By.tagName("span")).findElement(By.tagName("a")).getAttribute("href")));
+                }
+
+            }
+        }
+
+
+        Indices = driver.findElementByXPath("/html/body/div[1]/div[2]/div[2]/div[1]/div[3]/div[2]/table[2]/tbody");
+        trs2 = Indices.findElements(By.xpath("./*"));
         for (WebElement tr : trs2) {
 
             // US 500 for SP 500
@@ -109,9 +133,9 @@ public class MainService implements InitializingBean {
                 r.setAsk(tr.findElements(By.xpath("./*")).get(2).findElement(By.tagName("span")).getAttribute("data-value"));
 
                 if (r.getSymbol().equalsIgnoreCase("Wall Street")) {
-                    getInnerData(r, tr.findElements(By.xpath("./*")).get(0).findElement(By.tagName("span")).findElement(By.tagName("a")).getAttribute("href"));
+                    saveRate(getInnerData(r, tr.findElements(By.xpath("./*")).get(0).findElement(By.tagName("span")).findElement(By.tagName("a")).getAttribute("href")));
                 } else if (r.getSymbol().equalsIgnoreCase("US 500")) {
-                    getInnerData(r, tr.findElements(By.xpath("./*")).get(0).findElement(By.tagName("span")).findElement(By.tagName("a")).getAttribute("href"));
+                    saveRate(getInnerData(r, tr.findElements(By.xpath("./*")).get(0).findElement(By.tagName("span")).findElement(By.tagName("a")).getAttribute("href")));
                 }
 
             }
@@ -149,10 +173,5 @@ public class MainService implements InitializingBean {
         repo.save(details);
     }
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
-//        while (true) {
-//            start();
-//        }
-    }
+
 }
