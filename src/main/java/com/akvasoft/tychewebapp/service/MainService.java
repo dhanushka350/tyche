@@ -20,7 +20,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class MainService {
+public class MainService implements InitializingBean {
 
     @Autowired
     private RateDetailsRepo repo;
@@ -174,4 +174,17 @@ public class MainService {
     }
 
 
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        new Thread(() -> {
+            while (true) {
+                start();
+                try {
+                    Thread.sleep(50000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
 }

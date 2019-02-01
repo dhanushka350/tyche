@@ -15,20 +15,6 @@ public class TycheWebAppApplication extends SpringBootServletInitializer {
     public static void main(String[] args) {
 
         SpringApplication.run(TycheWebAppApplication.class, args);
-
-        new Thread(() -> {
-            MainService mainService = new MainService();
-
-//            while (true) {
-//                mainService.start();
-//
-//                try {
-//                    Thread.sleep(500000);
-//                } catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-        }).start();
     }
 
 }

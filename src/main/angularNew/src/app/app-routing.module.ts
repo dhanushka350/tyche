@@ -5,6 +5,7 @@ import {ChartsComponent} from "./charts/charts.component";
 import {LongerTermChartComponent} from "./longer-term-chart/longer-term-chart.component";
 import {DataPullComponent} from "./data-pull/data-pull.component";
 import {DataStreamComponent} from "./data-stream/data-stream.component";
+import {MainComponent} from "./main/main.component";
 
 const routes: Routes = [
   {
@@ -12,21 +13,27 @@ const routes: Routes = [
     component: LoginComponent
   },
   {
-    path: 'charts',
-    component: ChartsComponent
+    path: 'main', component: MainComponent, children: [
+      {
+        path: '',
+        component: ChartsComponent
+      },
+      {
+        path: 'longerTermChart',
+        component: LongerTermChartComponent
+      },
+      {
+        path: 'dataPull',
+        component: DataPullComponent
+      },
+      {
+        path: 'dataStream',
+        component: DataStreamComponent
+      }
+    ]
   },
-  {
-    path: 'longerTermChart',
-    component: LongerTermChartComponent
-  },
-  {
-    path: 'dataPull',
-    component: DataPullComponent
-  },
-  {
-    path: 'dataStream',
-    component: DataStreamComponent
-  },
+  {path: '**', redirectTo: ''}
+
 ];
 
 @NgModule({

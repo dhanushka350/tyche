@@ -12,6 +12,7 @@ import {DataStreamComponent} from './data-stream/data-stream.component';
 import {HttpClientModule} from "@angular/common/http";
 import {ChartsModule} from "ng2-charts";
 import {StreamService} from "./service/stream.service";
+import { MainComponent } from './main/main.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import {StreamService} from "./service/stream.service";
     ChartsComponent,
     LongerTermChartComponent,
     DataPullComponent,
-    DataStreamComponent
+    DataStreamComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,
