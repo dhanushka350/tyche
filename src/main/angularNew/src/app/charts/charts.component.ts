@@ -119,7 +119,7 @@ export class ChartsComponent implements OnInit {
     this.longTermChart = currency;
     this.currentSearch = currency + " - " + days + "Days";
 
-    this.http.get('api/scrape/getChartData/' + currency + '/' + days).subscribe(data => {
+    this.http.get('http://204.48.30.126:8080/api/scrape/getChartData/' + currency + '/' + days).subscribe(data => {
       this.lineChartLabels.length = 0;
       console.log(data);
       for (let ob of data["data"]) {

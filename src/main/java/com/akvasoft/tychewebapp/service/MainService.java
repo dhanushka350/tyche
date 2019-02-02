@@ -29,13 +29,13 @@ public class MainService implements InitializingBean {
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
     LocalDateTime now = null;
 
-    public void start() {
+    public void start(FirefoxDriver driver) {
         System.setProperty("webdriver.gecko.driver", "/var/lib/tomcat8/geckodriver");
         FirefoxOptions options = new FirefoxOptions();
         options.setHeadless(true);
-        innerDriver = new FirefoxDriver(options);
+
         try {
-            scrapeRates(new FirefoxDriver(options));
+            scrapeRates(driver);
 
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -176,14 +176,19 @@ public class MainService implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
+        System.setProperty("webdriver.gecko.driver", "/var/lib/tomcat8/geckodriver");
+        FirefoxOptions options = new FirefoxOptions();
+        options.setHeadless(true);
+        innerDriver = new FirefoxDriver(options);
+        FirefoxDriver driver=new FirefoxDriver(options);
         new Thread(() -> {
             while (true) {
-                start();
-                try {
-                    Thread.sleep(50000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                start(driver);
+//                try {
+////                    Thread.sleep(50000);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
             }
         }).start();
     }

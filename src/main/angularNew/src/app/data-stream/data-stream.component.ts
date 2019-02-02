@@ -27,7 +27,7 @@ export class DataStreamComponent implements OnInit {
 
 
   getTableData(days: any, currency: any) {
-    return this.http.get<model[]>('api/scrape/getChartData/' + currency + '/' + days);
+    return this.http.get<model[]>('http://204.48.30.126:8080/api/scrape/getChartData/' + currency + '/' + days);
   }
 
   getCurrencyData() {
