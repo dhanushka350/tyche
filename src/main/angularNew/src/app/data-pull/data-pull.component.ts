@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
+import {SETTING} from "../SETTING";
 
 @Component({
   selector: 'app-data-pull',
@@ -17,7 +18,7 @@ export class DataPullComponent implements OnInit {
   exportCSV() {
     let from = (<HTMLInputElement>document.getElementById('from')).value;
     let to = (<HTMLInputElement>document.getElementById('to')).value;
-    window.open('http://204.48.30.126:8080/api/scrape/exportCSV/' + from + '/' + to);
+    window.open(SETTING.HTTP+'/api/scrape/exportCSV/' + from + '/' + to);
   }
 
 }

@@ -90,6 +90,7 @@ public class MainService implements InitializingBean {
                 } else if (r.getSymbol().equalsIgnoreCase("Bitcoin")) {
                     saveRate(getInnerData(r, tr.findElements(By.xpath("./*")).get(0).findElement(By.tagName("span")).findElement(By.tagName("a")).getAttribute("href")));
                 } else if (r.getSymbol().equalsIgnoreCase("Oil - US Crude")) {
+                    r.setSymbol("OIL");
                     saveRate(getInnerData(r, tr.findElements(By.xpath("./*")).get(0).findElement(By.tagName("span")).findElement(By.tagName("a")).getAttribute("href")));
                 }
 
@@ -141,7 +142,7 @@ public class MainService implements InitializingBean {
             }
         }
 
-        driver.close();
+//        driver.close();
     }
 
     private RateDetails getInnerData(RateDetails r, String attribute) throws InterruptedException {
@@ -180,10 +181,30 @@ public class MainService implements InitializingBean {
         FirefoxOptions options = new FirefoxOptions();
         options.setHeadless(true);
         innerDriver = new FirefoxDriver(options);
-        FirefoxDriver driver=new FirefoxDriver(options);
         new Thread(() -> {
+            FirefoxDriver driver=new FirefoxDriver(options);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             while (true) {
-                start(driver);
+                try {
+                    start(driver);
+                    Thread.sleep(1000);
+                }catch (Exception e){
+                    e.printStackTrace();
+                    innerDriver.close();
+                    driver.close();
+                    try {
+                        Thread.sleep(4000);
+                        innerDriver = new FirefoxDriver(options);
+                        driver=new FirefoxDriver(options);
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
+                }
 //                try {
 ////                    Thread.sleep(50000);
 //                } catch (InterruptedException e) {
