@@ -166,6 +166,9 @@ public class MainService implements InitializingBean {
         r.setChangeOpenInterest(interest.split("\n")[1]);
         r.setDate(new Date());
         r.setInnerLink(attribute);
+        if(r.getInnerLink().trim().equalsIgnoreCase("https://www.dailyfx.com/crude-oil")){
+            r.setSymbol("OIL");
+        }
         System.out.println(r.getSymbol() + " collected");
         return r;
     }

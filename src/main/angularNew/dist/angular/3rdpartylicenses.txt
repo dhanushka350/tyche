@@ -450,6 +450,12 @@ MIT
 @angular/router
 MIT
 
+@angular/forms
+MIT
+
+ngx-webstorage
+MIT
+
 zone.js
 MIT
 The MIT License
