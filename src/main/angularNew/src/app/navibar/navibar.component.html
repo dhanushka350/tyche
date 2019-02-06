@@ -1,27 +1,53 @@
 <div style="text-align: center; margin-top: 10px">
   <h2 class="ui grey inverted header">Project Tyche</h2>
 </div>
-<div class="ui center aligned placeholder segment" style="background-color: black;">
-  <div class="inline">
-    <select class="ui dropdown" style="width: 20%;" #s (change)="setCurrency(s.value)">
-      <option value="EURUSD">EURUSD</option>
-      <option value="USDJPY">USDJPY</option>
-      <option value="GBPUSD">GBPUSD</option>
-      <option value="US 500">US 500</option>
-      <option value="OIL">USOIL</option>
-      <option value="USDCAD">USDCAD</option>
-      <option value="AUDUSD">AUDUSD</option>
-      <option value="NZDUSD">NZDUSD</option>
-      <option value="Bitcoin">Bitcoin</option>
-      <option value="Ethereum">Ethereum</option>
-      <option value="Wall Street">Wall Street</option>
-    </select>&nbsp;
-    <!--charts-->
-    <button class="ui blue button" style="width: 10%;" routerLink="/main">Charts</button>
-    <button class="ui blue button" style="width: 10%;" routerLink="chart-small">Chart Small</button>
-    <button class="ui blue button" style="width: 20%;" routerLink="dataPull">Data Pull</button>
-    <button class="ui blue button" style="width: 20%" routerLink="dataStream">Data Stream</button>
-  </div>
+<!--<div class="ui center aligned placeholder segment" style="background-color: black;">-->
+<!--<div class="inline">-->
+<!--<select class="ui dropdown" #s (change)="setCurrency(s.value)">-->
+<!--<option value="EURUSD">EURUSD</option>-->
+<!--<option value="USDJPY">USDJPY</option>-->
+<!--<option value="GBPUSD">GBPUSD</option>-->
+<!--<option value="US 500">US 500</option>-->
+<!--<option value="OIL">USOIL</option>-->
+<!--<option value="USDCAD">USDCAD</option>-->
+<!--<option value="AUDUSD">AUDUSD</option>-->
+<!--<option value="NZDUSD">NZDUSD</option>-->
+<!--<option value="Bitcoin">Bitcoin</option>-->
+<!--<option value="Ethereum">Ethereum</option>-->
+<!--<option value="Wall Street">Wall Street</option>-->
+<!--</select>&nbsp;-->
+<!--&lt;!&ndash;charts&ndash;&gt;-->
+<!--<button class="ui blue button" routerLink="/main">Charts</button>-->
+<!--<button class="ui blue button" routerLink="chart-small">Chart Small</button>-->
+<!--<button class="ui blue button" routerLink="dataPull">Export</button>-->
+<!--<button class="ui blue button" routerLink="dataStream">Stream</button>-->
+<!--</div>-->
+<!--</div>-->
+
+<div class="ui inverted five item menu" style="text-align: center">
+  <select class="ui dropdown" #s (change)="setCurrency(s.value)" style="color: white;font-weight: bold">
+    <option value="EURUSD">EURUSD</option>
+    <option value="USDJPY">USDJPY</option>
+    <option value="GBPUSD">GBPUSD</option>
+    <option value="US 500">US 500</option>
+    <option value="OIL">USOIL</option>
+    <option value="USDCAD">USDCAD</option>
+    <option value="AUDUSD">AUDUSD</option>
+    <option value="NZDUSD">NZDUSD</option>
+    <option value="Bitcoin">Bitcoin</option>
+    <option value="Ethereum">Ethereum</option>
+    <option value="Wall Street">Wall Street</option>
+  </select>&nbsp;
+  <a class="item" style="background-color: #0d71bb;font-weight: bold;" routerLink="/main">
+    Charts
+  </a>
+  <a class="item" style="background-color: #0d71bb;font-weight: bold" routerLink="chart-small">
+    Chart Small
+  </a>
+  <a class="item" style="background-color: #0d71bb;font-weight: bold" routerLink="dataPull">
+    Export
+  </a>
+  <a class="item" style="background-color: #0d71bb;font-weight: bold" routerLink="dataStream">
+    Stream
+  </a>
 </div>
-
-

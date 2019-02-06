@@ -114,16 +114,16 @@ export class ChartSmallComponent implements OnInit {
     { // grey
       backgroundColor: 'rgba(255,0,0,0)',
       borderColor: 'rgba(255,0,0,1)',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
-      pointBorderColor: '#fff',
+      // pointBackgroundColor: 'rgba(148,159,177,1)',
+      // pointBorderColor: '#fff',
       pointHoverBackgroundColor: '#fff',
       pointHoverBorderColor: 'rgba(148,159,177,0.8)'
     },
     { // dark grey
       backgroundColor: 'rgba(255,255,0,0)',
       borderColor: 'rgba(255,255,0,1)',
-      pointBackgroundColor: 'rgba(77,83,96,1)',
-      pointBorderColor: '#fff',
+      // pointBackgroundColor: 'rgba(77,83,96,1)',
+      // pointBorderColor: '#fff',
       pointHoverBackgroundColor: '#fff',
       pointHoverBorderColor: 'rgba(77,83,96,1)'
     }

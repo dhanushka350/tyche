@@ -3,6 +3,7 @@ package com.akvasoft.tychewebapp.service;
 import com.akvasoft.tychewebapp.modal.ExcelObject;
 import com.akvasoft.tychewebapp.modal.RateDetails;
 import com.akvasoft.tychewebapp.repo.RateDetailsRepo;
+import org.apache.commons.lang3.time.DateUtils;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.usermodel.Font;
@@ -68,14 +69,16 @@ public class DataStreamService {
     }
 
     public boolean exportCSVFile(String start, String end) {
-        System.out.println(start + "-" + end);
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        ExcelObject excelObjects = null;
         try {
-            List<RateDetails> csvData = repo.getCSVData(format.parse(start), format.parse(end));
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            Date endDate = format.parse(end);
+            endDate = DateUtils.addDays(endDate, 1);
+
+            ExcelObject excelObjects = null;
+            List<RateDetails> csvData = repo.getCSVData(format.parse(start), endDate);
             System.err.println(+csvData.size() + " **");
             createExcelFile(csvData);
-//            appendRows(csvData);
+
         } catch (ParseException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -165,7 +168,7 @@ public class DataStreamService {
             row.createCell(4).setCellValue(data.getShortValue());
             row.createCell(5).setCellValue(data.getChangeOpenInterest());
             row.createCell(6).setCellValue(data.getInnerLink());
-
+            System.out.println(data.getDate().toString());
         }
 
         FileOutputStream fileOut = new FileOutputStream("/var/lib/tomcat8/forex.xlsx");

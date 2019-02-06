@@ -30,18 +30,32 @@
   <h4 class="ui left header" style="color: white">
     <u id="longerChartText">{{longTermChart}} – Longer Term Chart</u>
   </h4>
-  <div class="inline">
-    <div class="ui form">
-      <div class="inline fields">
-        <label style="color: white; width: 10%; text-align: right">Update Image URL :</label>
-        <div class="twelve wide field">
-          <input style="" [(ngModel)]="img" type="text" placeholder="URL" id="url">
-        </div>
-        <div class="field">
-          <button class="ui button" style="color: black" (click)="changeImage()">Update</button>
-        </div>
+
+  <div class="ui grid">
+    <div class="four wide column">
+      <div class="column"><h6 style="color: white;">Update Image URL :</h6></div>
+    </div>
+    <div class="nine wide column">
+      <div class="ui input focus" style="width: 100%">
+        <input style="" [(ngModel)]="img" type="text" placeholder="URL" id="url">
       </div>
     </div>
+    <div class="one wide column"> <button class="ui button" style="color: black;" (click)="changeImage()">Update</button></div>
   </div>
-  <img  id="image" style="max-height: 500px; max-width: 90%">
+
+
+  <!--<h6 style="color: white;">Update Image URL :</h6>-->
+  <!--<div class="inline">-->
+  <!--<div class="ui form">-->
+  <!--<div class="inline fields">-->
+  <!--<div class="two wide field">-->
+  <!--<input style="" [(ngModel)]="img" type="text" placeholder="URL" id="url">-->
+  <!--</div>-->
+  <!--<div class="two wide field">-->
+  <!--<button class="ui button" style="color: black" (click)="changeImage()">Update</button>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--</div>-->
+  <img id="image" style="max-height: 500px; max-width: 90%">
 </div>

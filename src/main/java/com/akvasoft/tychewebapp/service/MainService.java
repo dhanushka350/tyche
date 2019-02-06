@@ -180,40 +180,40 @@ public class MainService implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        System.setProperty("webdriver.gecko.driver", "/var/lib/tomcat8/geckodriver");
-        FirefoxOptions options = new FirefoxOptions();
-        options.setHeadless(true);
-        innerDriver = new FirefoxDriver(options);
-        new Thread(() -> {
-            FirefoxDriver driver=new FirefoxDriver(options);
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            while (true) {
-                try {
-                    start(driver);
-                    Thread.sleep(1000);
-                }catch (Exception e){
-                    e.printStackTrace();
-                    innerDriver.close();
-                    driver.close();
-                    try {
-                        Thread.sleep(4000);
-                        innerDriver = new FirefoxDriver(options);
-                        driver=new FirefoxDriver(options);
-                        Thread.sleep(3000);
-                    } catch (InterruptedException e1) {
-                        e1.printStackTrace();
-                    }
-                }
+//        System.setProperty("webdriver.gecko.driver", "/var/lib/tomcat8/geckodriver");
+//        FirefoxOptions options = new FirefoxOptions();
+//        options.setHeadless(true);
+//        innerDriver = new FirefoxDriver(options);
+//        new Thread(() -> {
+//            FirefoxDriver driver=new FirefoxDriver(options);
+//            try {
+//                Thread.sleep(1000);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            while (true) {
 //                try {
-////                    Thread.sleep(50000);
-//                } catch (InterruptedException e) {
+//                    start(driver);
+//                    Thread.sleep(1000);
+//                }catch (Exception e){
 //                    e.printStackTrace();
+//                    innerDriver.close();
+//                    driver.close();
+//                    try {
+//                        Thread.sleep(4000);
+//                        innerDriver = new FirefoxDriver(options);
+//                        driver=new FirefoxDriver(options);
+//                        Thread.sleep(3000);
+//                    } catch (InterruptedException e1) {
+//                        e1.printStackTrace();
+//                    }
 //                }
-            }
-        }).start();
+////                try {
+//////                    Thread.sleep(50000);
+////                } catch (InterruptedException e) {
+////                    e.printStackTrace();
+////                }
+//            }
+//        }).start();
     }
 }

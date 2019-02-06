@@ -5,19 +5,40 @@
         <u>Data Export to CSV File</u>
       </h3>
       <br>
-      <div class="inline fields">
-        <label style="color: white; width: 10%; text-align: right">Date Range :</label>
-        <div class=" six wide field">
-          <input type="date" placeholder="Form" id="from">
+      <!--<div class="inline fields">-->
+      <!--<label style="color: white; width: 10%; text-align: right">Date Range :</label>-->
+      <!--<div class=" six wide field">-->
+      <!--<input type="date" placeholder="Form" id="from">-->
+      <!--</div>-->
+      <!--<div class=" six wide field">-->
+      <!--<input type="date" placeholder="To" id="to">-->
+      <!--</div>-->
+      <!--<div class="field">-->
+      <!--<button class="ui button" style="color: black" (click)="exportCSV();">Sumbit</button>-->
+      <!--</div>-->
+
+
+      <div class="ui grid fields">
+        <div class="two wide column"><label style="color: white; font-weight: bold">Date Range :</label></div>
+        <div class="six wide column">
+          <div style="width: 100%;">
+            <input type="date" placeholder="Form" id="from" style="width: 100%">
+          </div>
         </div>
-        <div class=" six wide field">
-          <input type="date" placeholder="To" id="to">
+        <div class="six wide column">
+          <div class="field" style="width: 100%;">
+            <input type="date" placeholder="To" id="to" style="width: 100%">
+          </div>
         </div>
-        <div class="field">
+        <div class="two wide column">
           <button class="ui button" style="color: black" (click)="exportCSV();">Sumbit</button>
         </div>
       </div>
+      <!--</div>-->
     </div>
   </div>
 </div>
+
+
+
 
