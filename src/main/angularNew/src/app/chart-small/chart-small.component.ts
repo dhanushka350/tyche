@@ -1,19 +1,18 @@
-import {ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {model} from "../dto/model";
-import {BaseChartDirective} from "ng2-charts";
 import {Subscription} from "rxjs";
+import {BaseChartDirective} from "ng2-charts";
+import {HttpClient} from "@angular/common/http";
 import {StreamService} from "../service/stream.service";
 import {SETTING} from "../SETTING";
 import {LocalStorageService} from 'ngx-webstorage';
 
-
 @Component({
-  selector: 'app-charts',
-  templateUrl: './charts.component.html',
-  styleUrls: ['./charts.component.scss']
+  selector: 'app-chart-small',
+  templateUrl: './chart-small.component.html',
+  styleUrls: ['./chart-small.component.scss']
 })
-export class ChartsComponent implements OnInit {
+export class ChartSmallComponent implements OnInit {
   ar: Object;
   lk: model;
   longTermChart: string = 'EURUSD';
@@ -66,7 +65,7 @@ export class ChartsComponent implements OnInit {
       lineTension: 0,
       yAxisID: "y-axis-0",
       data:
-        this.dataLine1
+      this.dataLine1
       ,
       // backgroundColor: "rgb(255,255,255)"
     }, {

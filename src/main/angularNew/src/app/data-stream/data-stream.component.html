@@ -1,23 +1,23 @@
 <div class="ui center aligned placeholder ui grey segment" style="background-color: black;">
-  <table class="ui inverted table">
+  <table class="table" style="color: white;border: 1px solid white">
     <thead>
     <tr>
-      <th>Symbol</th>
-      <th>Bid</th>
-      <th>Ask</th>
-      <th>Short Value</th>
-      <th>Change Open Interest</th>
-      <th>Date</th>
+      <th style="color: white;border: 1px solid white">Symbol</th>
+      <th style="color: white;border: 1px solid white">Bid</th>
+      <th style="color: white;border: 1px solid white">Ask</th>
+      <th style="color: white;border: 1px solid white">Short Value</th>
+      <th style="color: white;border: 1px solid white">Change Open Interest</th>
+      <th style="color: white;border: 1px solid white">Date</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let row of rows">
-      <td>{{row.symbol}}</td>
-      <td>{{row.bid}}</td>
-      <td>{{row.ask}}</td>
-      <td>{{row.shortValue}}</td>
-      <td>{{row.changeOpenInterest}}</td>
-      <td>{{row.date}}</td>
+      <td style="color: white;border: 1px solid white">{{row.symbol}}</td>
+      <td style="color: white;border: 1px solid white">{{row.bid}}</td>
+      <td style="color: white;border: 1px solid white">{{row.ask}}</td>
+      <td style="color: white;border: 1px solid white">{{row.shortValue}}</td>
+      <td style="color: white;border: 1px solid white">{{row.changeOpenInterest}}</td>
+      <td style="color: white;border: 1px solid white">{{row.date.substr(0,16)}}</td>
     </tr>
     </tbody>
   </table>

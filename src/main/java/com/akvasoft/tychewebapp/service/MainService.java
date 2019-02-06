@@ -29,13 +29,13 @@ public class MainService implements InitializingBean {
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
     LocalDateTime now = null;
 
-    public void start() {
+    public void start(FirefoxDriver driver) {
         System.setProperty("webdriver.gecko.driver", "/var/lib/tomcat8/geckodriver");
         FirefoxOptions options = new FirefoxOptions();
         options.setHeadless(true);
-        innerDriver = new FirefoxDriver(options);
+
         try {
-            scrapeRates(new FirefoxDriver(options));
+            scrapeRates(driver);
 
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -90,6 +90,7 @@ public class MainService implements InitializingBean {
                 } else if (r.getSymbol().equalsIgnoreCase("Bitcoin")) {
                     saveRate(getInnerData(r, tr.findElements(By.xpath("./*")).get(0).findElement(By.tagName("span")).findElement(By.tagName("a")).getAttribute("href")));
                 } else if (r.getSymbol().equalsIgnoreCase("Oil - US Crude")) {
+                    r.setSymbol("OIL");
                     saveRate(getInnerData(r, tr.findElements(By.xpath("./*")).get(0).findElement(By.tagName("span")).findElement(By.tagName("a")).getAttribute("href")));
                 }
 
@@ -141,7 +142,7 @@ public class MainService implements InitializingBean {
             }
         }
 
-        driver.close();
+//        driver.close();
     }
 
     private RateDetails getInnerData(RateDetails r, String attribute) throws InterruptedException {
@@ -165,6 +166,9 @@ public class MainService implements InitializingBean {
         r.setChangeOpenInterest(interest.split("\n")[1]);
         r.setDate(new Date());
         r.setInnerLink(attribute);
+        if(r.getInnerLink().trim().equalsIgnoreCase("https://www.dailyfx.com/crude-oil")){
+            r.setSymbol("OIL");
+        }
         System.out.println(r.getSymbol() + " collected");
         return r;
     }
@@ -176,9 +180,39 @@ public class MainService implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
+        System.setProperty("webdriver.gecko.driver", "/var/lib/tomcat8/geckodriver");
+        FirefoxOptions options = new FirefoxOptions();
+        options.setHeadless(true);
+        innerDriver = new FirefoxDriver(options);
         new Thread(() -> {
+            FirefoxDriver driver=new FirefoxDriver(options);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             while (true) {
-                start();
+                try {
+                    start(driver);
+                    Thread.sleep(1000);
+                }catch (Exception e){
+                    e.printStackTrace();
+                    innerDriver.close();
+                    driver.close();
+                    try {
+                        Thread.sleep(4000);
+                        innerDriver = new FirefoxDriver(options);
+                        driver=new FirefoxDriver(options);
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+//                try {
+////                    Thread.sleep(50000);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
             }
         }).start();
     }

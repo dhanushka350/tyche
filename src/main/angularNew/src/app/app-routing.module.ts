@@ -6,6 +6,7 @@ import {LongerTermChartComponent} from "./longer-term-chart/longer-term-chart.co
 import {DataPullComponent} from "./data-pull/data-pull.component";
 import {DataStreamComponent} from "./data-stream/data-stream.component";
 import {MainComponent} from "./main/main.component";
+import {ChartSmallComponent} from "./chart-small/chart-small.component";
 
 const routes: Routes = [
   {
@@ -17,6 +18,10 @@ const routes: Routes = [
       {
         path: '',
         component: ChartsComponent
+      },
+      {
+        path: 'chart-small',
+        component: ChartSmallComponent
       },
       {
         path: 'longerTermChart',

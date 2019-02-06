@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {model} from "../dto/model";
 import {StreamService} from "../service/stream.service";
 import {Subscription} from "rxjs";
+import {SETTING} from "../SETTING";
 
 @Component({
   selector: 'app-data-stream',
@@ -27,7 +28,7 @@ export class DataStreamComponent implements OnInit {
 
 
   getTableData(days: any, currency: any) {
-    return this.http.get<model[]>('api/scrape/getChartData/' + currency + '/' + days);
+    return this.http.get<model[]>(SETTING.HTTP+'/api/scrape/getChartData/' + currency + '/' + days);
   }
 
   getCurrencyData() {

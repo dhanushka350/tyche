@@ -13,7 +13,9 @@ import {HttpClientModule} from "@angular/common/http";
 import {ChartsModule} from "ng2-charts";
 import {StreamService} from "./service/stream.service";
 import { MainComponent } from './main/main.component';
-
+import { ChartSmallComponent } from './chart-small/chart-small.component';
+import {NgxWebstorageModule} from 'ngx-webstorage';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -24,13 +26,16 @@ import { MainComponent } from './main/main.component';
     LongerTermChartComponent,
     DataPullComponent,
     DataStreamComponent,
-    MainComponent
+    MainComponent,
+    ChartSmallComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ChartsModule
+    ChartsModule,
+    FormsModule,
+    NgxWebstorageModule.forRoot(),
   ],
   providers: [StreamService],
   bootstrap: [AppComponent]

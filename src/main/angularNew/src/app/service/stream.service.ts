@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
-import {Observable, Subject} from "rxjs";
+import {BehaviorSubject, Observable, Subject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class StreamService {
 
-  private currencyValue: Subject<String> = new Subject();
+  private currencyValue: BehaviorSubject<String> = new BehaviorSubject("EURUSD");
 
   constructor() {
   }
