@@ -11,9 +11,9 @@ import java.util.List;
 @Repository
 public interface RateDetailsRepo extends JpaRepository<RateDetails, Integer> {
 
-    @Query(value = "select * from T_RATE_DETAILS where SCR_DATE >= ?2 and SYMBOL=?1", nativeQuery = true)
+    @Query(value = "select * from T_RATE_DETAILS where SCR_DATE >= ?2 and SYMBOL=?1 ORDER By SCR_DATE DESC ", nativeQuery = true)
     List<RateDetails> getLastDaysRecords(String currency, Date date);
 
-    @Query(value = "select * from T_RATE_DETAILS where SCR_DATE >= ?1 and SCR_DATE <=?2", nativeQuery = true)
+    @Query(value = "select * from T_RATE_DETAILS where SCR_DATE >= ?1 and SCR_DATE <=?2 ORDER By SCR_DATE DESC", nativeQuery = true)
     List<RateDetails> getCSVData(Date start, Date end);
 }

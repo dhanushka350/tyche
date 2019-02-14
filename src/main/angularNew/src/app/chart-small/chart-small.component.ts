@@ -22,10 +22,10 @@ export class ChartSmallComponent implements OnInit {
   @ViewChild(BaseChartDirective)
   public chart: BaseChartDirective;
 
-  height="942px";
+  height = "942px";
   img;
 
-  constructor(private http: HttpClient, private stream: StreamService,private change:ChangeDetectorRef,private localSt:LocalStorageService) {
+  constructor(private http: HttpClient, private stream: StreamService, private change: ChangeDetectorRef, private localSt: LocalStorageService) {
     this.getCurrencyData();
 
   }
@@ -35,21 +35,21 @@ export class ChartSmallComponent implements OnInit {
       this.currency = currency;
       console.log("getting data for -" + this.currency);
       this.getChartData(5, this.currency);
-      this.img=this.localSt.retrieve(this.currency+"_IMG");
+      this.img = this.localSt.retrieve(this.currency + "_IMG");
     });
   }
 
-  public dataLine1: Array<any>=[];
-  public dataLine2: Array<any>=[];
-  public lineChartLabels: Array<any>=[];
+  public dataLine1: Array<any> = [];
+  public dataLine2: Array<any> = [];
+  public lineChartLabels: Array<any> = [];
 
   ngOnInit() {
     // this.dataLine1 = [];
     // this.dataLine2 = [];
     // this.lineChartLabels = [];0
     this.getChartData(5, "EURUSD");
-    this.height=""+(window.innerHeight*0.96)+"px";
-    console.log("ssssssssssssss"+this.height);
+    this.height = "" + (window.innerHeight * 0.96) + "px";
+    console.log("ssssssssssssss" + this.height);
     this.change.markForCheck();
 
   }
@@ -64,28 +64,35 @@ export class ChartSmallComponent implements OnInit {
       pointHitRadius: 5,
       lineTension: 0,
       yAxisID: "y-axis-0",
-      data:
-      this.dataLine1
+      borderWidth: 2,
+      data: this.dataLine1
       ,
       // backgroundColor: "rgb(255,255,255)"
     }, {
       fill: true,
-      pointHoverRadius: 5,
-      pointHitRadius: 5,
+      pointHoverRadius: 0.5,
+      pointHitRadius: 0.5,
       lineTension: 0,
       yAxisID: "y-axis-1",
       label: 'Short',
       scaleFontColor: 'red',
+      borderWidth: 2,
       data: this.dataLine2
       // backgroundColor: "rgb(255,255,0)"
     }
   ];
 
+  radius=0.5;
 
   public lineChartOptions: any = {
     scaleFontColor: 'red',
     maintainAspectRatio: false,
     bezierCurveTension: 0,
+    elements: {
+      point:{
+        radius: this.radius
+      }
+    },
     scales: {
       xAxes: [{
         display: true,
@@ -140,21 +147,25 @@ export class ChartSmallComponent implements OnInit {
     this.http.get(SETTING.HTTP + '/api/scrape/getChartData/' + currency + '/' + days).subscribe(data => {
       this.lineChartLabels.length = 0;
       console.log(data);
-      this.dataLine1=[];
-      this.dataLine2=[];
-      this.lineChartLabels=[];
-      let i=1;
-      for (let ob of data["data"]) {
-        this.lineChartLabels.push(ob.date.substr(0,16));
-        this.dataLine1.push({x: ob.date.substr(0,16), y: parseFloat(ob.bid)});
-        this.dataLine2.push({x: ob.date.substr(0,16), y: parseFloat(ob.shortValue.replace("%", ""))});
-        i+=1;
+
+      let kp = data["data"];
+      kp=kp.reverse();
+
+      this.dataLine1 = [];
+      this.dataLine2 = [];
+      this.lineChartLabels = [];
+      let i = 1;
+      for (let ob of kp) {
+        this.lineChartLabels.push(ob.date.toLocaleString().substr(0, 16));
+        this.dataLine1.push({x: ob.date.toLocaleString().substr(0, 16), y: parseFloat(ob.bid)});
+        this.dataLine2.push({x: ob.date.toLocaleString().substr(0, 16), y: parseFloat(ob.shortValue.replace("%", ""))});
+        i += 1;
         console.log(ob.bid);
         console.log(parseFloat(ob.shortValue.replace("%", "")));
 
       }
-      this.lineChartData[0].data=this.dataLine1;
-      this.lineChartData[1].data=this.dataLine2;
+      this.lineChartData[0].data = this.dataLine1;
+      this.lineChartData[1].data = this.dataLine2;
       console.log(this.dataLine1);
       console.log(this.dataLine2);
       // this.lineChartData = [
@@ -192,7 +203,7 @@ export class ChartSmallComponent implements OnInit {
 
   changeImage() {
     let url = (<HTMLSelectElement>document.getElementById('url')).value;
-    this.localSt.store(this.currency+"_IMG",this.img);
+    this.localSt.store(this.currency + "_IMG", this.img);
     (<HTMLSelectElement>document.getElementById('image')).setAttribute("src", url);
   }
 }

@@ -1,6 +1,7 @@
 package com.akvasoft.tychewebapp.modal;
 
 import javax.persistence.*;
+import java.util.Calendar;
 import java.util.Date;
 
 @Entity
@@ -82,7 +83,12 @@ public class RateDetails {
     }
 
     public Date getDate() {
-        return date;
+        Calendar c=Calendar.getInstance();
+        c.setTime(date);
+
+        c.add(Calendar.HOUR,-8);
+        return c.getTime();
+
     }
 
     public void setDate(Date date) {

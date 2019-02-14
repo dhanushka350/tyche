@@ -13,5 +13,5 @@ export class model {
 
   innerLink: string;
 
-  date: string;
+  date: Date;
 }
