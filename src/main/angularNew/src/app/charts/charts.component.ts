@@ -65,28 +65,35 @@ export class ChartsComponent implements OnInit {
       pointHitRadius: 5,
       lineTension: 0,
       yAxisID: "y-axis-0",
-      data:
-      this.dataLine1
+      borderWidth: 2,
+      data: this.dataLine1
       ,
       // backgroundColor: "rgb(255,255,255)"
     }, {
       fill: true,
-      pointHoverRadius: 5,
-      pointHitRadius: 5,
+      pointHoverRadius: 0.5,
+      pointHitRadius: 0.5,
       lineTension: 0,
       yAxisID: "y-axis-1",
       label: 'Short',
       scaleFontColor: 'red',
+      borderWidth: 2,
       data: this.dataLine2
       // backgroundColor: "rgb(255,255,0)"
     }
   ];
 
+  radius=0.5;
 
   public lineChartOptions: any = {
     scaleFontColor: 'red',
     maintainAspectRatio: false,
     bezierCurveTension: 0,
+    elements: {
+      point:{
+        radius: this.radius
+      }
+    },
     scales: {
       xAxes: [{
         display: true,
@@ -140,14 +147,18 @@ export class ChartsComponent implements OnInit {
     this.http.get(SETTING.HTTP + '/api/scrape/getChartData/' + currency + '/' + days).subscribe(data => {
       this.lineChartLabels.length = 0;
       console.log(data);
+
+      let kp = data["data"];
+      kp=kp.reverse();
+
       this.dataLine1 = [];
       this.dataLine2 = [];
       this.lineChartLabels = [];
       let i = 1;
-      for (let ob of data["data"]) {
-        this.lineChartLabels.push(ob.date.substr(0, 16));
-        this.dataLine1.push({x: ob.date.substr(0, 16), y: parseFloat(ob.bid)});
-        this.dataLine2.push({x: ob.date.substr(0, 16), y: parseFloat(ob.shortValue.replace("%", ""))});
+      for (let ob of kp) {
+        this.lineChartLabels.push(ob.date.toLocaleString().substr(0, 16));
+        this.dataLine1.push({x: ob.date.toLocaleString().substr(0, 16), y: parseFloat(ob.bid)});
+        this.dataLine2.push({x: ob.date.toLocaleString().substr(0, 16), y: parseFloat(ob.shortValue.replace("%", ""))});
         i += 1;
         console.log(ob.bid);
         console.log(parseFloat(ob.shortValue.replace("%", "")));

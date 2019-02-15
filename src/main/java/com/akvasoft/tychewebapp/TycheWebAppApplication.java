@@ -1,16 +1,20 @@
 package com.akvasoft.tychewebapp;
 
-import com.akvasoft.tychewebapp.service.MainService;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
-import java.io.IOException;
+import javax.annotation.PostConstruct;
+import java.util.TimeZone;
 
 @SpringBootApplication
 public class TycheWebAppApplication extends SpringBootServletInitializer {
+
+    @PostConstruct
+    public void init(){
+        // Setting Spring Boot SetTimeZone
+        TimeZone.setDefault(TimeZone.getTimeZone("PST"));
+    }
 
     public static void main(String[] args) {
 

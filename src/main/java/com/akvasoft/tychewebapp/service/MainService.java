@@ -12,7 +12,10 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -27,7 +30,7 @@ public class MainService implements InitializingBean {
 
     private FirefoxDriver innerDriver;
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-    LocalDateTime now = null;
+    Date now = null;
 
     public void start(FirefoxDriver driver) {
         System.setProperty("webdriver.gecko.driver", "/var/lib/tomcat8/geckodriver");
@@ -153,7 +156,7 @@ public class MainService implements InitializingBean {
         WebElement sentiment = null;
         String shortValue = null;
         String interest = null;
-        now = LocalDateTime.now();
+        now = new Date(System.currentTimeMillis());
 
         sentiment = innerDriver.findElementByCssSelector(".margin-bottom-40 > div:nth-child(1) > div:nth-child(3)");
         shortValue = sentiment.findElements(By.xpath("./*")).get(2).getAttribute("innerText");
@@ -164,9 +167,9 @@ public class MainService implements InitializingBean {
 
         r.setShortValue(shortValue.split("\n")[1]);
         r.setChangeOpenInterest(interest.split("\n")[1]);
-        r.setDate(new Date());
+        r.setDate(now);
         r.setInnerLink(attribute);
-        if(r.getInnerLink().trim().equalsIgnoreCase("https://www.dailyfx.com/crude-oil")){
+        if (r.getInnerLink().trim().equalsIgnoreCase("https://www.dailyfx.com/crude-oil")) {
             r.setSymbol("OIL");
         }
         System.out.println(r.getSymbol() + " collected");
@@ -174,46 +177,88 @@ public class MainService implements InitializingBean {
     }
 
     public void saveRate(RateDetails details) {
+        if (new BigDecimal(details.getBid()).compareTo(BigDecimal.ZERO) == 0) {
+            return;
+        }
         repo.save(details);
     }
 
 
     @Override
     public void afterPropertiesSet() throws Exception {
-//        System.setProperty("webdriver.gecko.driver", "/var/lib/tomcat8/geckodriver");
-//        FirefoxOptions options = new FirefoxOptions();
-//        options.setHeadless(true);
-//        innerDriver = new FirefoxDriver(options);
-//        new Thread(() -> {
-//            FirefoxDriver driver=new FirefoxDriver(options);
-//            try {
-//                Thread.sleep(1000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//            while (true) {
-//                try {
-//                    start(driver);
-//                    Thread.sleep(1000);
-//                }catch (Exception e){
-//                    e.printStackTrace();
+        System.setProperty("webdriver.gecko.driver", "/var/lib/tomcat8/geckodriver");
+        FirefoxOptions options = new FirefoxOptions();
+        options.setHeadless(true);
+        innerDriver = new FirefoxDriver(options);
+        new Thread(() -> {
+            FirefoxDriver driver = new FirefoxDriver(options);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            while (true) {
+                try {
+                    checkToReboot();
+                    start(driver);
+                    Thread.sleep(1000);
+                } catch (Exception e) {
+                    e.printStackTrace();
 //                    innerDriver.close();
 //                    driver.close();
-//                    try {
-//                        Thread.sleep(4000);
-//                        innerDriver = new FirefoxDriver(options);
-//                        driver=new FirefoxDriver(options);
-//                        Thread.sleep(3000);
-//                    } catch (InterruptedException e1) {
-//                        e1.printStackTrace();
-//                    }
+                    try {
+                        Thread.sleep(4000);
+                        innerDriver = new FirefoxDriver(options);
+                        driver = new FirefoxDriver(options);
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+//                try {
+////                    Thread.sleep(50000);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
 //                }
-////                try {
-//////                    Thread.sleep(50000);
-////                } catch (InterruptedException e) {
-////                    e.printStackTrace();
-////                }
-//            }
-//        }).start();
+            }
+        }).start();
+    }
+
+    private void checkToReboot() throws IOException, InterruptedException {
+        String command = "free -m";
+
+        Process proc = Runtime.getRuntime().exec(command);
+
+        // Read the output
+
+        BufferedReader reader =
+                new BufferedReader(new InputStreamReader(proc.getInputStream()));
+
+        String line = "";
+        double available = 0;
+        reader.readLine();
+        line = reader.readLine();
+        String p[] = line.split("        ");
+//        System.out.println(t);
+        System.out.println(p);
+        available = Double.parseDouble(p[3]);
+
+        System.out.println("Available ::   "+available);
+        if(available<1000) {
+            proc.waitFor();
+
+            command = "reboot";
+
+            proc = Runtime.getRuntime().exec(command);
+            reader =
+                    new BufferedReader(new InputStreamReader(proc.getInputStream()));
+
+            line = "";
+            while ((line = reader.readLine()) != null) {
+                System.out.print(line + "\n");
+            }
+
+            proc.waitFor();
+        }
     }
 }
