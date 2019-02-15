@@ -134,7 +134,6 @@ export class ChartsComponent implements OnInit {
 
 
   getChartData(days: any, currency: any) {
-
     this.longTermChart = currency;
     this.currentSearch = currency + " - " + days + "Days";
 
@@ -158,30 +157,6 @@ export class ChartsComponent implements OnInit {
       this.lineChartData[1].data = this.dataLine2;
       console.log(this.dataLine1);
       console.log(this.dataLine2);
-      // this.lineChartData = [
-      //   {
-      //     fill: true,
-      //     label: 'Heat',
-      //     pointHoverRadius: 5,
-      //     pointHitRadius: 5,
-      //     lineTension: 0,
-      //     yAxisID: "y-axis-0",
-      //     data:this.dataLine1
-      //     ,
-      //     // backgroundColor: "rgb(255,255,255)"
-      //   }, {
-      //     fill: true,
-      //     pointHoverRadius: 5,
-      //     pointHitRadius: 5,
-      //     lineTension: 0,
-      //     yAxisID: "y-axis-1",
-      //     label: 'Mass',
-      //     scaleFontColor: 'red',
-      //     data: this.dataLine2
-      //     // backgroundColor: "rgb(255,255,0)"
-      //   }
-      // ];
-
       console.log(this.lineChartData);
     });
   }
